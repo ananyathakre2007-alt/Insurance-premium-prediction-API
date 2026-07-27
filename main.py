@@ -18,8 +18,8 @@ class userinput(BaseModel):
     age:Annotated[int,Field(...,gt=0,lt=120,description='Age of the user')]
     weight:Annotated[float,Field(...,gt=0,description='weight of the user')]
     height:Annotated[float,Field(...,gt=0,lt=2.5,description='height of the user in meters')]
-    income_lpa:Annotated[float,Field(...,gt=0,description='Annual salary of the user')]
-    smoker:Annotated[str,Field(...,description='Is the user a smoker')]
+    income_lpa:Annotated[float,Field(...,description='Annual salary of the user')]
+    smoker:Annotated[bool,Field(...,description='Is the user a smoker')]
     city:Annotated[str,Field(...,description='city of the user')]
     occupation:Annotated[Literal['student', 'private_job', 'business_owner', 'government_job',
        'freelancer', 'retired'],Field(...,description = 'Occupation of the user')]
@@ -96,7 +96,7 @@ def predict(data:userinput):
     )
     prediction=model.predict(input_df)[0]
 
-    return JSONResponse(200,content={'predicted_category':prediction})
+    return JSONResponse(content={'predicted_category':prediction},status_code=200)
 
 ## -------------------- DATA FLOW --------------------
 # 1. Client sends input as JSON.
